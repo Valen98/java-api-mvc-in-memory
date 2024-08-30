@@ -18,8 +18,14 @@ public class ProductController {
     }
 
     @GetMapping()
-    public ArrayList<Product> getAll() {
-        return this.productRepository.getAll();
+    @ResponseStatus(HttpStatus.OK)
+    public ArrayList<Product> getAll(@RequestParam (required = false) String type) {
+        if(type.isEmpty()){
+            return this.productRepository.getAll();
+        }else {
+            return this.productRepository.getAllTypeOfProducts(type);
+        }
+
     }
 
     @GetMapping("{id}")
@@ -70,13 +76,4 @@ public class ProductController {
         return this.productRepository.createProduct(product);
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("type/{type}")
-    public ArrayList<Product> getAllFromType(@PathVariable String type){
-        ArrayList<Product> typeList = this.productRepository.getAllTypeOfProducts(type);
-        if(typeList.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No products of the provided category were found.");
-        }
-        return typeList;
-    }
 }
