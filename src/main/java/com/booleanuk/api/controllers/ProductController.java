@@ -20,7 +20,7 @@ public class ProductController {
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public ArrayList<Product> getAll(@RequestParam (required = false) String type) {
-        if(type.isEmpty()){
+        if(type == null){
             return this.productRepository.getAll();
         }else {
             return this.productRepository.getAllTypeOfProducts(type);
