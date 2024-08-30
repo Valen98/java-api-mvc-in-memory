@@ -64,7 +64,7 @@ public class ProductRepository {
         ArrayList<Product> typeList = new ArrayList<>();
 
         for (Product product: products) {
-            if(product.getType().equals(type)){
+            if(product.getType().equalsIgnoreCase(type)){
                 typeList.add(product);
             }
         }
